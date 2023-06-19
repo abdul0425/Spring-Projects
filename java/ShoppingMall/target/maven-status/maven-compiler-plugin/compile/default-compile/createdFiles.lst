@@ -1,0 +1,11 @@
+com\jspider\HqlQuery\Query.class
+com\jspider\PersonEntity\Person.class
+com\jspider\BrandRepository\BrandRepository.class
+com\jspider\ModelRepository\ModelRepository.class
+com\jspider\Constant\AppConstant.class
+com\jspider\ModelEntityClass\Model.class
+com\jspider\Utillity\Resource.class
+com\jspider\AadharEntity\Aadhar.class
+com\jspider\AssociationRepository\AssociationRepository.class
+com\jspider\BrandEntityClass\Brand.class
+com\jspider\ShoppingMall\App.class

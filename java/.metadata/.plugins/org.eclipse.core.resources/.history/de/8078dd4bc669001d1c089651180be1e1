@@ -1,0 +1,10 @@
+package edu.jspider.SpringBasics;
+
+public class BookTicket {
+
+	public BookTicket() {
+		System.out.println("Ticket Booked");
+	}
+
+	
+}

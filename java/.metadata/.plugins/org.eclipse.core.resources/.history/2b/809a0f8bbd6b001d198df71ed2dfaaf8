@@ -1,0 +1,5 @@
+package edu.jspider.XMLConfiguration;
+
+public class Song {
+
+}

@@ -1,0 +1,73 @@
+package edu.jspider.Repository;
+
+import java.time.LocalDate;
+import org.hibernate.query.Query;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import edu.jspider.DTOClass.AccountDTO;
+import edu.jspider.DTOClass.TransactionDTO;
+import edu.jspider.Entity.AccountDetails;
+import edu.jspider.Entity.TransactionHistory;
+import edu.jspider.SessionFactory.Factory;
+
+public class AccountRepository {
+
+	public void saveAccountDetails(AccountDTO accountDto) {
+		try {
+			AccountDetails accountDetail = new AccountDetails();
+			accountDetail.setAccountNumber(accountDto.getAccountNumber());
+			accountDetail.setBranchName(accountDto.getBranchName());
+			accountDetail.setIfscCode(accountDto.getIfscCode());
+			accountDetail.setName(accountDto.getName());
+			accountDetail.setCreatedDate(LocalDate.now());
+			accountDetail.setTotalAmount(500000.00);
+
+			TransactionHistory history = new TransactionHistory();
+			history.setAccountNumber(accountDto.getAccountNumber());
+			history.setCreditAmount(accountDetail.getTotalAmount());
+			history.setAvailableBalance(accountDetail.getTotalAmount());
+			history.setCreatedDate("23-Nov-22");
+			history.setOperationType("Online");
+			List<TransactionHistory> thList = new ArrayList<>();
+			thList.add(history);
+			accountDetail.setTxnList(thList);
+
+			SessionFactory sessionFactory = Factory.sessionFactoryObject();
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.persist(accountDetail);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public AccountDetails getAccountDetails(long accountNumber) {
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		String query = "from AccountDetails where accountNumber=:an";
+		Query createQuery = session.createQuery(query);
+		createQuery.setParameter("an", accountNumber);
+		return (AccountDetails) createQuery.uniqueResult();
+	}
+	
+	
+	public void updateAccountDetails()
+	{
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		String query="update AccountDetails set branchName=:bn where accountNumber=:an";
+		Query createQuery = session.createQuery(query);
+		createQuery.setParameter("bn", branchName);
+		createQuery.setParameter("an", accountNumber);
+		createQuery.executeUpdate();
+	}
+
+}

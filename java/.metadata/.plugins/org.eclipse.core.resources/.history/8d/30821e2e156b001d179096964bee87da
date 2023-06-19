@@ -1,0 +1,77 @@
+package edu.jspider.Entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import edu.jspider.Constant.AppConstant;
+
+@Entity
+@Table(name=AppConstant.TRANSACTION_HISTORY)
+public class TransactionHistory implements Serializable{
+
+	@Id
+	@GenericGenerator(name="transaction_info",strategy = "increment")
+	@GeneratedValue(generator = "transaction_info")
+	@Column(name="id")
+	private int id;
+	@Column(name="account_number")
+	private long accountNumber;
+	@Column(name="credit_debit_amount")
+	private double amount;
+	@Column(name="create_date")
+	private String createdDate;
+	@Column(name="available_balance")
+	private double availableBalance;
+	@Column(name="operation_type")
+	private String operationType;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	public double getAvailableBalance() {
+		return availableBalance;
+	}
+	public void setAvailableBalance(double availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+	public String getOperationType() {
+		return operationType;
+	}
+	public void setOperationType(String operationType) {
+		this.operationType = operationType;
+	}
+	@Override
+	public String toString() {
+		return "TransactionHistory [id=" + id + ", accountNumber=" + accountNumber + ", amount=" + amount
+				+ ", createdDate=" + createdDate + ", availableBalance=" + availableBalance + ", operationType="
+				+ operationType + "]";
+	}
+	
+}

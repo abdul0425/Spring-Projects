@@ -1,0 +1,5 @@
+package com.mehmed.springsecurity.controller;
+
+public class MyController {
+
+}

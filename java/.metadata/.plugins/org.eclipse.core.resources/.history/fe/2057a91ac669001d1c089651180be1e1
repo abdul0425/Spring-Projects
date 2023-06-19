@@ -1,0 +1,13 @@
+package edu.jspider.SpringBasics;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        new BookTicket();
+    }
+}

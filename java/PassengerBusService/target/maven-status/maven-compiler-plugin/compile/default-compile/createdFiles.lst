@@ -1,0 +1,6 @@
+edu\jspider\association_repository\Repository.class
+edu\jspider\constant\AppConstant.class
+edu\jspider\PassengerBusService\App.class
+edu\jspider\entity\Passenger.class
+edu\jspider\driver\PassengerBusService.class
+edu\jspider\entity\Bus.class

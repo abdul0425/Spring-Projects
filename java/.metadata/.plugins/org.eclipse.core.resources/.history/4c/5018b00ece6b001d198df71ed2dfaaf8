@@ -1,0 +1,44 @@
+package edu.jspider.SpringBasicsJavaConfiguration;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Music {
+
+	@Value("Telugu")
+	private String language;
+	private String movieName;
+	private Song song;
+	
+	public Music()
+	{
+		System.out.println("Playlist Created !.");
+	}
+	
+	
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getMovieName() {
+		return movieName;
+	}
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+	public Song getSong() {
+		return song;
+	}
+	public void setSong(Song song) {
+		this.song = song;
+	}
+	@Override
+	public String toString() {
+		return "Music [language=" + language + ", movieName=" + movieName + ", song=" + song + "]";
+	}
+	
+	
+}

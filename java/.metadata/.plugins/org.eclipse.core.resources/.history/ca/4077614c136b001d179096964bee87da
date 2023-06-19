@@ -1,0 +1,91 @@
+package edu.jspider.Repository;
+
+import java.time.LocalDate;
+import org.hibernate.query.Query;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+
+import edu.jspider.DTOClass.AccountDTO;
+import edu.jspider.DTOClass.TransactionDTO;
+import edu.jspider.Entity.AccountDetails;
+import edu.jspider.Entity.TransactionHistory;
+import edu.jspider.SessionFactory.Factory;
+
+public class Repository {
+
+/*	public void saveAccountDetails(AccountDTO accountDto) {
+		try {
+			AccountDetails accountDetail = new AccountDetails();
+			accountDetail.setAccountNumber(accountDto.getAccountNumber());
+			accountDetail.setBranchName(accountDto.getBranchName());
+			accountDetail.setIfscCode(accountDto.getIfscCode());
+			accountDetail.setName(accountDto.getName());
+			accountDetail.setCreatedDate(LocalDate.now());
+			accountDetail.setTotalAmount(500000.00);
+
+			TransactionHistory history = new TransactionHistory();
+			List<TransactionHistory> thList = new ArrayList<>();
+			thList.add(history);
+			accountDetail.setTxnList(thList);
+
+			SessionFactory sessionFactory = Factory.sessionFactoryObject();
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.persist(accountDetail);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}  */
+
+	public void depositeMoney(TransactionDTO txnDto, int id) {
+
+		try {
+			TransactionHistory history = new TransactionHistory();
+			history.setAccountNumber(txnDto.getAccountNumber());
+			history.setAmount(txnDto.getAmount());
+			history.setOperationType("Online");
+			history.setCreatedDate("23-Nov-22");
+			//
+
+			SessionFactory sessionFactory = Factory.sessionFactoryObject();
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			double updatedBalance=updatedBalance(id, history.getAmount());
+
+			String query="update AccountDetails set totalAmount=:ta where id=:i";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("ta", updatedBalance);
+			createQuery.setParameter("i", id);
+			createQuery.executeUpdate();
+			
+			
+			//session.persist(history);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public double updatedBalance(int id,double depositeAmount)
+	{
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		TransactionHistory transactionHistory = session.get(TransactionHistory.class, id);
+		double available= transactionHistory.getAvailableBalance()+depositeAmount;
+		return available;
+	}
+
+
+	public void withdrawMoney(TransactionDTO txnDto) {
+
+	}
+}

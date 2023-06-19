@@ -1,0 +1,43 @@
+package edu.jspider.SpringBasics.JavaConfiguration;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class Song {
+
+	@Value("Adirindey")
+	private String songName;
+	@Value("Devi Sree Prasad")
+	private String singerName;
+	@Value("320KB 15MB")
+	private String size;
+	
+	public Song()
+	{
+		System.out.println("Song Created");
+	}
+	
+	public String getSongName() {
+		return songName;
+	}
+	public void setSongName(String songName) {
+		this.songName = songName;
+	}
+	public String getSingerName() {
+		return singerName;
+	}
+	public void setSingerName(String singerName) {
+		this.singerName = singerName;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
+	@Override
+	public String toString() {
+		return "Song [songName=" + songName + ", singerName=" + singerName + ", size=" + size + "]";
+	}
+	
+	
+}

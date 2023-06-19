@@ -1,0 +1,71 @@
+package edu.jspider.Repository;
+
+import org.hibernate.SessionFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import edu.jspider.DTOClass.TransactionDTO;
+import edu.jspider.Entity.AccountDetails;
+import edu.jspider.Entity.TransactionHistory;
+import edu.jspider.SessionFactory.Factory;
+
+public class TransactionRepository {
+
+	public void depositeMoney(TransactionDTO txnDto, int id) {
+
+		try {
+			SessionFactory sessionFactory = Factory.sessionFactoryObject();
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			TransactionHistory history = new TransactionHistory();
+			history.setAccountNumber(txnDto.getAccountNumber());
+			history.setCreditAmount(txnDto.getAmount());
+			history.setOperationType("Online");
+			history.setCreatedDate("23-Nov-22");
+			double available = updatedBalanceAfterCredit(id, txnDto.getAmount());
+			AccountDetails accountDetails = session.get(AccountDetails.class, id);
+			accountDetails.setTotalAmount(available);
+			history.setAvailableBalance(available);
+			List<TransactionHistory> txnList = new ArrayList<>();
+			txnList.add(history);
+			accountDetails.setTxnList(txnList);
+
+			session.save(accountDetails);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public double updatedBalanceAfterCredit(int id, double amount) {
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		AccountDetails accountDetails = session.get(AccountDetails.class, id);
+		return accountDetails.getTotalAmount() + amount;
+	}
+
+	
+	public void withdrawMoney(TransactionDTO txnDto, int id)
+	{
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		TransactionHistory history = new TransactionHistory();
+		history.setAccountNumber(txnDto.getAccountNumber());
+		history.setDebitAmount(txnDto.getAmount());
+		history.setOperationType("PhonePe");
+		history.setCreatedDate("23-Nov-22");
+	}
+	public double updatedBalanceAfterDedit(int id, double amount) {
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		AccountDetails accountDetails = session.get(AccountDetails.class, id);
+		return accountDetails.getTotalAmount() - amount;
+	}
+}

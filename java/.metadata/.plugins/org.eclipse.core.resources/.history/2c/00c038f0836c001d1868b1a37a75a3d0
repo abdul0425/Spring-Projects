@@ -1,0 +1,11 @@
+package edu.jspider.SpringBasics.JavaConfiguration;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class ScopeClass {
+
+	public ScopeClass() {
+		System.out.println("Object Created !.");
+	}
+}

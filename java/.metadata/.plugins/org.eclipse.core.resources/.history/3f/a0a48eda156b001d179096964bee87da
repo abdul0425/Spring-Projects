@@ -1,0 +1,44 @@
+package edu.jspider.Repository;
+
+public class TransactionRepository {
+
+		public void depositeMoney(TransactionDTO txnDto, int id) {
+
+	try {
+		TransactionHistory history = new TransactionHistory();
+		history.setAccountNumber(txnDto.getAccountNumber());
+		history.setAmount(txnDto.getAmount());
+		history.setOperationType("Online");
+		history.setCreatedDate("23-Nov-22");
+		//
+
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		double updatedBalance=updatedBalance(id, history.getAmount());
+
+		String query="update AccountDetails set totalAmount=:ta where id=:i";
+		Query createQuery = session.createQuery(query);
+		createQuery.setParameter("ta", updatedBalance);
+		createQuery.setParameter("i", id);
+		createQuery.executeUpdate();
+		
+		
+		//session.persist(history);
+		transaction.commit();
+		session.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+public double updatedBalance(int id,double depositeAmount)
+{
+	SessionFactory sessionFactory = Factory.sessionFactoryObject();
+	Session session = sessionFactory.openSession();
+	TransactionHistory transactionHistory = session.get(TransactionHistory.class, id);
+	double available= transactionHistory.getAvailableBalance()+depositeAmount;
+	return available;
+}
+
+}

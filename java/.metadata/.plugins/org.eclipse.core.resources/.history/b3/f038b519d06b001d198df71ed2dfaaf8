@@ -1,0 +1,21 @@
+package edu.jspider.SpringBasicsJavaConfiguration;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class Driver {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.register();
+		context.refresh();
+		Song song=context.getBean(Song.class);
+		System.out.println(song);
+		
+		Music music=context.getBean(Music.class);
+		System.out.println(music);
+		
+		
+		
+	}
+}

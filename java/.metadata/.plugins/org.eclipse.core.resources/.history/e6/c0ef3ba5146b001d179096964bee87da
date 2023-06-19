@@ -1,0 +1,17 @@
+package edu.jspider.SessionFactory;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class Factory {
+	public static SessionFactory sessionfactory;
+
+
+	public static SessionFactory sessionFactoryObject() {
+		if (sessionfactory == null) {
+			sessionfactory = new Configuration().configure().buildSessionFactory();
+		}
+		return sessionfactory;
+	}
+
+}

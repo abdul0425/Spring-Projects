@@ -1,0 +1,42 @@
+package edu.jspider.JspiderBankService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.jspider.DTOClass.AccountDTO;
+import edu.jspider.DTOClass.TransactionDTO;
+import edu.jspider.Entity.TransactionHistory;
+import edu.jspider.Repository.AccountRepository;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setName("Arshad Alam");
+        accountDTO.setAccountNumber(1234543210l);
+        accountDTO.setBranchName("Barwadih");
+        accountDTO.setIfscCode("SBIN0002917");
+        
+        
+        
+        
+        AccountRepository repository = new AccountRepository();
+        //repository.saveAccountDetails(accountDTO); 
+        
+//        TransactionDTO dto = new TransactionDTO();
+//        dto.setAccountNumber(accountDTO.getAccountNumber());
+//        dto.setAmount(100000.00);
+//        repository.depositeMoney(dto, 1);
+        
+        
+        
+        
+        
+        
+    }
+}

@@ -1,0 +1,53 @@
+package javaStreams;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		List<Employee> list = new ArrayList<Employee>();
+		list.add(new Employee("Abdul", "Bangalore", 45000.00));
+		list.add(new Employee("Sasthi", "Malda", 40000.00));
+		list.add(new Employee("Rivu", "Bangalore", 30000.00));
+		list.add(new Employee("Akhil", "Patna", 55000.00));
+		list.add(new Employee("Rohan", "Gurgaon", 65000.00));
+		list.add(new Employee("Ravi", "Bangalore", 50000.00));
+		list.add(new Employee("Muzaffer", "Hal", 28000.00));
+		list.add(new Employee("Anjani", "Patna", 60000.00));
+		
+		/* Find the Employee having salary >= 45000*/
+		List<Employee> updatedList = list.stream().filter(employee->employee.salary>=45000).collect(Collectors.toList());
+		updatedList.forEach(emp->System.out.println(emp));
+		System.out.println("________________________________________________");
+		/* Count the Employee : */
+		long count = updatedList.stream().count();
+		System.out.println("Employee Count : "+count);
+		System.out.println("________________________________________________");
+		
+		/* Sort the Employee : */
+		/*
+		 * Comparator<Employee> comp = new Comparator<Employee>() {
+		 * 
+		 * @Override public int compare(Employee o1, Employee o2) { // TODO
+		 * Auto-generated method stub return o2.name.compareTo(o1.name); } };
+		 */
+			
+		/* Sorting Based on name : */
+		List<Employee> sortedList = list.stream().sorted((emp1,emp2)->emp1.name.compareTo(emp2.name)).collect(Collectors.toList());
+		sortedList.forEach(System.out::println);
+		System.out.println("________________________________________________");
+		/* Sorting Based on salary : */
+		List<Employee> salarySortedEmployee = list.stream().sorted((emp1,emp2)->
+		(emp1.salary<emp2.salary)?-1:(emp1.salary>emp2.salary)?1:0).collect(
+				Collectors.toList());
+		salarySortedEmployee.forEach(System.out::println);
+		System.out.println("________________________________________________");
+		
+		
+		
+		
+	}
+}

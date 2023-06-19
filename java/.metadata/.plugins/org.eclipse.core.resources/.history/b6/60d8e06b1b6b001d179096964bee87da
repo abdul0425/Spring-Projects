@@ -1,0 +1,51 @@
+package edu.jspider.Repository;
+
+import org.hibernate.SessionFactory;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import edu.jspider.DTOClass.TransactionDTO;
+import edu.jspider.Entity.TransactionHistory;
+import edu.jspider.SessionFactory.Factory;
+
+public class TransactionRepository {
+
+	public void depositeMoney(TransactionDTO txnDto, int id) {
+
+		try {
+			SessionFactory sessionFactory = Factory.sessionFactoryObject();
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			TransactionHistory history = new TransactionHistory();
+			history.setAccountNumber(txnDto.getAccountNumber());
+			history.setCreditAmount(txnDto.getAmount());
+			history.setOperationType("Online");
+			history.setCreatedDate("23-Nov-22");
+			double available = updatedBalance(id);
+			history.setAvailableBalance(available);
+
+			String query = "update AccountDetails set totalAmount=:ta where id=:i";
+			Query createQuery = session.createQuery(query);
+			createQuery.setParameter("ta", available);
+			createQuery.setParameter("i", id);
+			createQuery.executeUpdate();
+
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public double updatedBalance(int id) {
+		SessionFactory sessionFactory = Factory.sessionFactoryObject();
+		Session session = sessionFactory.openSession();
+		TransactionHistory transactionHistory = session.get(TransactionHistory.class, id);
+		double available = transactionHistory.getAvailableBalance() + transactionHistory.getCreditAmount()
+				+ transactionHistory.getDebitAmount();
+		return available;
+	}
+
+}

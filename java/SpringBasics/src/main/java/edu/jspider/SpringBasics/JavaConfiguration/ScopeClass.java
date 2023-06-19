@@ -1,0 +1,15 @@
+package edu.jspider.SpringBasics.JavaConfiguration;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+
+@Scope(scopeName = "singleton")
+//@Scope(scopeName = "prototype")
+@Component
+public class ScopeClass {
+
+	public ScopeClass() {
+		System.out.println("Scope Object Created !.");
+	}
+}

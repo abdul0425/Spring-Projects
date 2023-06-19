@@ -1,0 +1,9 @@
+package com.mehmed.springsecurity.configuration;
+
+
+@Configuration
+@ComponentScan("com.mehmed.springsecurity")
+@EnableWebMvc
+public class AppConfiguration {
+
+}

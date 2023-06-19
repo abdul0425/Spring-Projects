@@ -1,0 +1,25 @@
+package edu.jspider.SpringBasics;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import edu.jspider.SpringBasicsXMLConfiguration.BookTicket;
+import edu.jspider.SpringBasicsXMLConfiguration.Car;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+	public static void main( String[] args )
+    {
+        //new BookTicket();
+    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("new-spring-web.xml");
+    	BookTicket ticket = context.getBean(BookTicket.class);
+    	ticket.bookingConfirmation();
+    	System.out.println(ticket);
+    	
+    	Car car = context.getBean(Car.class);
+    	System.out.println(car);
+    }
+}
